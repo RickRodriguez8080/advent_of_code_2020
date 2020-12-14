@@ -58,25 +58,25 @@ int valid_password_count(FILE *in, char *policy_with_password) {
 }
 
 //  Strips the policy and password into its constituent parts
-//  1. the minimum occurence value
-//  2. the maximum occurence value
+//  1. position1 refers to an index - 1 in the array
+//  2. position2 refers to an index - 1 in the array
 //  3. the letter to be compared and
 //  4. the password itself
 //  Returns the value of provided to it by valid_password()
 bool password_meets_policy(char *policy_with_password, size_t len) {
 
     // tokenize the policy and password    
-    int min_value, max_value;
+    int position1, position2;
     char comparison_letter;
     char *passwordPtr;    
     
     char *tokenPtr;
     tokenPtr = strtok(policy_with_password, " -:");
-    min_value = atoi(tokenPtr);
+    position1 = atoi(tokenPtr);
     //printf("%d ", min_value);
 
     tokenPtr = strtok(NULL, " -:");
-    max_value = atoi(tokenPtr);
+    position2 = atoi(tokenPtr);
     //printf("%d ", max_value);
 
     tokenPtr = strtok(NULL, " -:");
@@ -91,7 +91,7 @@ bool password_meets_policy(char *policy_with_password, size_t len) {
     //printf("%ld ", password_length);
 
     // check password validity
-    if (valid_password(passwordPtr, password_length, comparison_letter, min_value, max_value)) {
+    if (valid_password(passwordPtr, password_length, comparison_letter, position1, position2)) {
         //printf("Valid\n");
         return true;
     }
